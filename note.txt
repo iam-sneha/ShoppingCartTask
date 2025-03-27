@@ -1,0 +1,93 @@
+FAQ
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-faq',
+  templateUrl: './faq.component.html',
+  styleUrls: ['./faq.component.css']
+})
+export class FaqComponent {
+  faqs = [
+    { question: 'Where can I watch?', answer: 'You can watch on our official website, mobile app, and streaming platforms like Netflix, Hulu, and Amazon Prime. Availability may vary by region.' }
+  ];
+
+  newQuestion: string = '';
+  newAnswer: string = '';
+
+  addFAQ() {
+    if (this.newQuestion.trim() === '' || this.newAnswer.trim() === '') {
+      alert('Please enter both a question and an answer.');
+      return;
+    }
+
+    this.faqs.push({ question: this.newQuestion, answer: this.newAnswer });
+
+    // Clear input fields
+    this.newQuestion = '';
+    this.newAnswer = '';
+  }
+}
+
+
+<section class="faq-section">
+  <div class="container">
+    <h4 class="faq-heading">FAQs</h4>
+    
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item" *ngFor="let faq of faqs; let i = index">
+        <h2 class="accordion-header" id="heading{{i}}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{i}}">
+            {{ faq.question }}
+          </button>
+        </h2>
+        <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            {{ faq.answer }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input fields to add new FAQ -->
+    <div class="mt-4">
+      <input type="text" [(ngModel)]="newQuestion" class="form-control" placeholder="Enter your question">
+      <input type="text" [(ngModel)]="newAnswer" class="form-control mt-2" placeholder="Enter your answer">
+      <button class="btn btn-primary add-faq-btn mt-2" (click)="addFAQ()">Add FAQ</button>
+    </div>
+  </div>
+</section>
+
+
+
+.faq-section {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  padding: 20px;
+}
+.faq-heading {
+  font-weight: 600;
+}
+.accordion-item {
+  border-top: 1px solid #999;
+  background-color: transparent;
+}
+.accordion-button {
+  color: #fff;
+  background-color: transparent;
+  border: none;
+}
+.accordion-button:focus {
+  box-shadow: none;
+}
+.accordion-button::after {
+  filter: invert(1);
+}
+.accordion-body {
+  background-color: transparent;
+  border-top: 1px solid #666;
+}
+.add-faq-btn {
+  margin-top: 20px;
+}
